@@ -1,3 +1,13 @@
+<?php
+
+# Berhubung dengan database
+require_once 'inc/database.php';
+
+# Mendapatkan tiga produk
+$sql = "SELECT * FROM produk ORDER BY RAND() LIMIT 3;";
+$result = mysqli_query($conn, $sql);
+
+?>
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -26,24 +36,21 @@
       </div>
       <h1 class="teks">Menarik Hari Ini</h1>
       <div class="galeri">
+          <?php
+          while ($row = mysqli_fetch_assoc($result)){
+            $idProduk = $row['idProduk'];
+            $namaProduk = $row['namaProduk'];
+            $gambar = $row['gambar'];
+          ?>
           <div class="item">
               <a href="produk.html">
-                <img src="img/al_prestigious_cup_johor.jpg" alt="Jersi Johor Biru">
-                <p class="teks">AL PRESTIGIOUS CUP JOHOR</p>
+                <img src="img/<?php echo $gambar?>">
+                <p class="teks"><?php echo $namaProduk?></p>
               </a>
           </div>
-          <div class="item">
-              <a href="produk.html">
-                <img src="img/fan_jc_sabah.jpg" alt="Jersi Fan Sabah Merah">
-                <p class="teks">FAN JERSI SABAH</p>
-              </a>
-          </div>
-          <div class="item">
-              <a href="produk.html">
-                <img src="img/squadra_21.jpg" alt="Jersi Squadra Biru">
-                <p class="teks">JERSI SQUADRA 21</p>
-              </a>
-          </div>
+          <?php
+          }
+          ?>
       </div>
     </div>
     <footer>
