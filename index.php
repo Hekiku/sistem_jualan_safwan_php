@@ -24,9 +24,7 @@ $result = mysqli_query($conn, $sql);
     <header>
       <p class="header">KEDAI JERSI UTARA</p>
       <ul class="menu">
-          <li id="page1"><a href="index.html">HALAMAN UTAMA</a></li>
-          <li id="page2"><a href="senarai_produk.html">SENARAI JERSI</a></li>
-          <li id="page3"><a href="logmasuk.html">LOG MASUK</a></li>
+          <?php include 'inc/menu.php'?>
       </ul>
     </header>
     <div class="content">
@@ -43,7 +41,7 @@ $result = mysqli_query($conn, $sql);
             $gambar = $row['gambar'];
           ?>
           <div class="item">
-              <a href="produk.html">
+              <a href="produk.php?idProduk=<?php echo $idProduk?>">
                 <img src="img/<?php echo $gambar?>">
                 <p class="teks"><?php echo $namaProduk?></p>
               </a>

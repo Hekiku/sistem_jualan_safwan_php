@@ -1,3 +1,13 @@
+<?php
+
+# Berhubung dengan database
+require_once 'inc/database.php';
+
+# Mendapatkan produk
+$sql = "SELECT * FROM produk;";
+$result = mysqli_query($conn, $sql);
+
+?>
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -14,9 +24,7 @@
     <header>
       <p class="header">KEDAI JERSI UTARA</p>
       <ul class="menu">
-          <li><a href="index.html">HALAMAN UTAMA</a></li>
-          <li><a href="senarai_produk.html">SENARAI JERSI</a></li>
-          <li><a href="logmasuk.html">LOG MASUK</a></li>
+        <?php include 'inc/menu.php'?>
       </ul>
     </header>
     <div class="content">
@@ -24,22 +32,31 @@
         <button onclick="ubahSaizFont(5)">+</button>
         <button onclick="ubahSaizFont(-5)">-</button>
       </div>
-      <div class="produk">
-          <img src="img/al_prestigious_cup_johor.jpg">
-          <p class="namaProduk teks">AL PRESTIGIOUS CUP JOHOR</p>
-          <p class="lbl teks">Jenama:</p><p class="detail teks">Adidas</p>
-          <p class="lbl teks">Saiz:</p><p class="detail teks">L</p>
-          <p class="lbl teks">Warna:</p><p class="detail teks">Biru</p>
-          <p class="hargaProduk teks">RM 45.00</p>
-          <form class="brgBandingPilih" action="" method="post">
-              <button type="submit" name="banding">Banding</button>
-              <button type="submit"name="pilih">Pilih</button>
-          </form>
+      <h1 class="teks">Senarai Jersi</h1>
+      <div class="galeri">
+        <?php
+        while ($row = mysqli_fetch_assoc($result)){
+          $idProduk = $row['idProduk'];
+          $namaProduk = $row['namaProduk'];
+          $gambar = $row['gambar'];
+        ?>
+        <div class="item">
+            <a href="produk.php?idProduk=<?php echo $idProduk?>">
+              <img src="img/<?php echo $gambar?>">
+              <p class="teks"><?php echo $namaProduk?></p>
+            </a>
+        </div>
+        <?php
+        }
+        ?>
       </div>
     </div>
     <footer>
         <p>Hakcipta Terpelihara Safwan 2022 &copy;</p>
     </footer>
     <script src="scripts.js"></script>
+    <script>
+      document.getElementById("page2").style.backgroundColor="deepskyblue";
+    </script>
   </body>
 </html>
