@@ -14,9 +14,9 @@
     <header>
       <p class="header">KEDAI JERSI UTARA</p>
       <ul class="menu">
-          <li><a href="index.html">HALAMAN UTAMA</a></li>
-          <li><a href="senarai_produk.html">SENARAI JERSI</a></li>
-          <li><a href="logmasuk.html">LOG MASUK</a></li>
+          <li id="page1"><a href="index.html">HALAMAN UTAMA</a></li>
+          <li id="page2"><a href="senarai_produk.html">SENARAI JERSI</a></li>
+          <li id="page3"><a href="logmasuk.html">LOG MASUK</a></li>
       </ul>
     </header>
     <div class="content">
@@ -24,24 +24,22 @@
         <button onclick="ubahSaizFont(5)">+</button>
         <button onclick="ubahSaizFont(-5)">-</button>
       </div>
-      <h1 class="teks">Pendaftaran Pengguna</h1>
+      <h1 class="teks">Log Masuk</h1>
       <form class="borang" action="" method="post">
         <label for="idPengguna">ID Pengguna</label>
         <input type="text" name="idPengguna" id="idPengguna" required>
         <label for="kataLaluan">Kata Laluan</label>
-        <input type="password" name="kataLaluan" id="kataLaluan" minlength="8" maxlength="10" required>
-        <label for="nama">Nama</label>
-        <input type="text" name="nama" id="nama" pattern="[A-Za-z]+" title="Sila guna huruf sahaja" required>
-        <label for="noTelefon">No Telefon</label>
-        <input type="text" name="noTelefon" id="noTelefon" pattern="[0-9]+" title="Sila masukkan nombor sahaja">
-        <label for="email">Email</label>
-        <input type="email" name="email" id="email">
-        <button type="submit" name="daftar">Daftar</button>
+        <input type="password" name="kataLaluan" id="kataLaluan" required>
+        <button type="submit" name="logmasuk">Log Masuk</button>
+        <p>Pengguna baharu? Klik <a href="daftar.php">di sini</a> untuk daftar</p>
       </form>
     </div>
     <footer>
         <p>Hakcipta Terpelihara Safwan 2022 &copy;</p>
     </footer>
     <script src="scripts.js"></script>
+    <script>
+      document.getElementById("page3").style.backgroundColor="deepskyblue";
+    </script>
   </body>
 </html>
