@@ -14,9 +14,7 @@
     <header>
       <p class="header">KEDAI JERSI UTARA</p>
       <ul class="menu">
-          <li id="page1"><a href="index.html">HALAMAN UTAMA</a></li>
-          <li id="page2"><a href="senarai_produk.html">SENARAI JERSI</a></li>
-          <li id="page3"><a href="logmasuk.html">LOG MASUK</a></li>
+        <?php include 'inc/menu.php'?>
       </ul>
     </header>
     <div class="content">
@@ -25,7 +23,7 @@
         <button onclick="ubahSaizFont(-5)">-</button>
       </div>
       <h1 class="teks">Log Masuk</h1>
-      <form class="borang" action="" method="post">
+      <form class="borang" action="inc/logmasuk-inc.php" method="post">
         <label for="idPengguna">ID Pengguna</label>
         <input type="text" name="idPengguna" id="idPengguna" required>
         <label for="kataLaluan">Kata Laluan</label>
