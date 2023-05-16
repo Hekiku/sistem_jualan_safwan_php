@@ -1,4 +1,5 @@
 <?php
+session_start();
 
 # Berhubung dengan database
 require_once 'inc/database.php';
