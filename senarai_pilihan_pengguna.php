@@ -1,3 +1,25 @@
+<?php
+session_start();
+
+# Berhubung dengan database
+require_once 'inc/database.php';
+
+# Mendapat produk pilihan pengguna
+$sql = "SELECT
+          COUNT(idPengguna) AS bil,
+          pmb.idProduk,
+          namaProduk,
+          idJenama,
+          harga,
+          gambar
+        FROM pembelian pmb
+        INNER JOIN produk prd
+        ON pmb.idProduk = prd.idProduk
+        GROUP BY idProduk
+        ORDER BY bil DESC";
+$result = mysqli_query($conn, $sql);
+
+?>
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -14,11 +36,7 @@
     <header>
       <p class="header">KEDAI JERSI UTARA</p>
       <ul class="menu print">
-          <li id="page1"><a href="index.html">HALAMAN UTAMA</a></li>
-          <li id="page2"><a href="senarai_produk.html">SENARAI JERSI</a></li>
-          <li id="page8"><a href="tambah_produk.html">TAMBAH PRODUK</a></li>
-          <li id="page9"><a href="senarai_pilihan_pengguna.html">PILIHAN PENGGUNA</a></li>
-          <li id="page7"><a href="logkeluar.html">LOG KELUAR</a></li>
+        <?php include 'inc/menu.php'?>
       </ul>
     </header>
     <div class="content">
@@ -36,17 +54,33 @@
             <th>Harga</th>
             <th>Bil. Pengguna</th>
           </tr>
+          <?php
+          while ($row = mysqli_fetch_assoc($result)) {
+            $bil = $row['bil'];
+            $idProduk = $row['idProduk'];
+            $namaProduk = $row['namaProduk'];
+            $idJenama = $row['idJenama'];
+            $harga = $row['harga'];
+            $gambar = $row['gambar'];
+
+            $sql2 = "SELECT jenama FROM jenama WHERE idJenama = '$idJenama'";
+            $result2 = mysqli_query($conn, $sql2);
+            $jenama = mysqli_fetch_assoc($result2)['jenama'];
+          ?>
           <tr>
             <td>
-              <a href="produk.html">
-                <img src="img/al_prestigious_cup_johor.jpg">
+              <a href="produk_kemaskini.php?idProduk=<?php echo $idProduk?>">
+                <img src="img/<?php echo $gambar?>">
               </a>
             </td>
-            <td>Al Prestigious Cup Johor</td>
-            <td>Adidas</td>
-            <td>RM 45.00</td>
-            <td>3</td>
+            <td><?php echo $namaProduk?></td>
+            <td><?php echo $jenama?></td>
+            <td>RM <?php echo $harga?></td>
+            <td><?php echo $bil?></td>
           </tr>
+          <?php 
+          }
+          ?>
         </table>
         <button  class="print" onclick="window.print(); return false;">Cetak</button>
       </div>
