@@ -41,12 +41,8 @@ while ($row = mysqli_fetch_assoc($result)){
     <header>
       <p class="header">KEDAI JERSI UTARA</p>
       <ul class="menu">
-        <li id="page1"><a href="index.html">HALAMAN UTAMA</a></li>
-        <li id="page2"><a href="senarai_produk.html">SENARAI JERSI</a></li>
-        <li id="page8"><a href="tambah_produk.html">TAMBAH PRODUK</a></li>
-        <li id="page9"><a href="senarai_pilihan_pengguna.html">PILIHAN PENGGUNA</a></li>
-        <li id="page7"><a href="logkeluar.html">LOG KELUAR</a></li>
-    </ul>
+        <?php include 'inc/menu.php'?>
+      </ul>
     </header>
     <div class="content">
       <div class="btnUbahSaiz">
