@@ -50,7 +50,7 @@ while ($row = mysqli_fetch_assoc($result)){
         <button onclick="ubahSaizFont(-5)">-</button>
       </div>
       <h1 class="teks">Kemaskini Produk</h1>
-      <form class="borang" action="inc/kemaskini-inc.php" method="post">
+      <form class="borang" action="inc/kemaskini-inc.php" method="post" enctype="multipart/form-data">
         <input type="hidden" name="idProduk" value="<?php echo $idProduk?>">
         <input type="hidden" name="gambar" value="<?php echo $gambar?>">
         <label for="namaProduk">Nama Produk</label>

@@ -1,9 +1,8 @@
 <?php
 
-if (isset($_POST['kemaskini'])) {
+if (isset($_POST['tambah'])) {
     include_once 'database.php';
 
-    $idProduk = $_POST['idProduk'];
     $namaProduk = $_POST['namaProduk'];
     $jenama = $_POST['jenama'];
     $saiz = $_POST['saiz'];
@@ -23,22 +22,22 @@ if (isset($_POST['kemaskini'])) {
         $idJenama = mysqli_insert_id($conn);
     }
 
-    # Kemaskini maklumat produk
-    $sql = "UPDATE produk
-            SET
-                namaProduk = '$namaProduk',
-                idJenama = '$idJenama',
-                warna = '$warna',
-                saiz = '$saiz',
-                harga = '$harga'
-            WHERE
-                idProduk = '$idProduk'";
+    # Masukkan maklumat dalam pangkalan data
+    $sql = "INSERT INTO produk(namaProduk, idJenama, saiz, warna, harga)
+            VALUES (
+                '$namaProduk',
+                '$idJenama',
+                '$saiz',
+                '$warna',
+                '$harga')
+            ";
     $result = mysqli_query($conn, $sql);
+    $idProduk = mysqli_insert_id($conn);
 
-    if ($_FILES['gambarBaru']['size'] > 0) {
+    if ($_FILES['gambar']['size'] > 0) {
         # Muat naik gambar baru
         $folderGambar = "../img/";
-        $gambarMuatNaik = basename($_FILES['gambarBaru']['name']);
+        $gambarMuatNaik = basename($_FILES['gambar']['name']);
         $jenisFail = strtolower(pathinfo($gambarMuatNaik)['extension']);
         $gambar = $namaProduk . '.' . $jenisFail;
         $lokasiGambar = $folderGambar . $gambar;
@@ -51,7 +50,7 @@ if (isset($_POST['kemaskini'])) {
             </script>
             ";
         } else {
-            $namaSementara = $_FILES['gambarBaru']['tmp_name'];
+            $namaSementara = $_FILES['gambar']['tmp_name'];
             $pindahGambar = move_uploaded_file($namaSementara, $lokasiGambar);
 
             # Masukkan maklumat gambar terbaharu
@@ -61,34 +60,14 @@ if (isset($_POST['kemaskini'])) {
             $result = mysqli_query($conn, $sql);
         }
     }
-
     echo "
     <script>
-        alert('Kemaskini berjaya');
+        alert('Produk berjaya ditambah');
         window.location.href = '../produk_kemaskini.php?idProduk=$idProduk';
     </script>
     ";
-} elseif (isset($_POST['hapus'])) {
-    include_once 'database.php';
-    
-    $idProduk = $_POST['idProduk'];
-    $gambar = $_POST['gambar'];
-
-    $sql = "DELETE FROM produk WHERE idProduk = '$idProduk'";
-    $result = mysqli_query($conn, $sql);
-    if ($result) {
-        $file = '../img/' . $gambar;
-        unlink($file);
-
-        echo "
-        <script>
-            alert('Produk berjaya dihapuskan');
-            window.location.href = '../senarai_produk.php';
-        </script>
-        ";
-    }
 } else {
-    header("Location: ../index.php?ralat=aksestidakdibenarkan");
+    header("Location: ../tambah_produk.php?ralat=aksestidakdibenarkan");
 }
 
 ?>

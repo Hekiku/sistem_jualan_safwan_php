@@ -1,3 +1,17 @@
+<?php
+session_start();
+
+# Berhubung dengan database
+require_once 'inc/database.php';
+
+# Mendapat produk pilihan pengguna
+$idPengguna = $_SESSION['idPengguna'];
+$sql = "SELECT *
+        FROM pembelian
+        WHERE idPengguna = '$idPengguna'";
+$result = mysqli_query($conn, $sql);
+
+?>
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -14,12 +28,7 @@
     <header>
       <p class="header">KEDAI JERSI UTARA</p>
       <ul class="menu print">
-          <li id="page1"><a href="index.html">HALAMAN UTAMA</a></li>
-          <li id="page2"><a href="senarai_produk.html">SENARAI JERSI</a></li>
-          <li id="page4"><a href="senarai_banding.html">SENARAI BANDING</a></li>
-          <li id="page5"><a href="senarai_pilihan.html">SENARAI PILIHAN</a></li>
-          <li id="page6"><a href="profil.html">PROFIL</a></li>
-          <li id="page7"><a href="logkeluar.html">LOG KELUAR</a></li>
+      <?php include 'inc/menu.php'?>
       </ul>
     </header>
     <div class="content">
@@ -39,6 +48,13 @@
             <th>Harga</th>
             <th>Tarikh & Waktu</th>
           </tr>
+          <?php
+          while ($row = mysqli_fetch_assoc($result)){
+            $idProduk = $row['idProduk'];
+            $tarikh = date('d/m/Y', strtotime($row['tarikh']));
+            $masa = date('h:i A', strtotime($row['masa']));
+          }
+          ?>
           <tr>
             <td>
               <a href="produk.html">

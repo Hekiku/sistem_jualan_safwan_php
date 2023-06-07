@@ -1,3 +1,10 @@
+<?php
+session_start();
+if($_SESSION['status'] != "admin"){
+  header("Location: index.php?ralat=aksestidakdibenarkan");
+}
+
+?>
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -14,12 +21,8 @@
     <header>
       <p class="header">KEDAI JERSI UTARA</p>
       <ul class="menu">
-        <li id="page1"><a href="index.html">HALAMAN UTAMA</a></li>
-        <li id="page2"><a href="senarai_produk.html">SENARAI JERSI</a></li>
-        <li id="page8"><a href="tambah_produk.html">TAMBAH PRODUK</a></li>
-        <li id="page9"><a href="senarai_pilihan_pengguna.html">PILIHAN PENGGUNA</a></li>
-        <li id="page7"><a href="logkeluar.html">LOG KELUAR</a></li>
-    </ul>
+        <?php include 'inc/menu.php'?>
+      </ul>
     </header>
     <div class="content">
       <div class="btnUbahSaiz">
@@ -27,7 +30,7 @@
         <button onclick="ubahSaizFont(-5)">-</button>
       </div>
       <h1 class="teks">Tambah Produk</h1>
-      <form class="borang" action="" method="post">
+      <form class="borang" action="inc/tambah-inc.php" method="post" enctype="multipart/form-data">
         <label for="namaProduk">Nama Produk</label>
         <input type="text" name="namaProduk" id="namaProduk" required>
         <label for="jenama">Jenama</label>
