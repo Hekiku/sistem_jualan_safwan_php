@@ -1,3 +1,24 @@
+<?php
+session_start();
+if ($_SESSION['status'] != 'pegguna') {
+  header("Location: index.php?ralat=aksestidakdibenarkan");
+}
+
+# Berhubung dengan database
+require_once 'inc/database.php';
+
+# Mendapatkan maklumat pengguna
+$idPengguna = $_SESSION['idPengguna'];
+$sql = "SELECT * FROM pengguna WHERE idPengguna = '$idPengguna'";
+$result = mysqli_query($conn, $sql);
+
+while ($row = mysqli_fetch_assoc($result)){
+  $kataLaluan = $row['kataLaluan'];
+  $nama = $row['nama'];
+  $noTelefon = $row['noTelefon'];
+  $email = $row['email'];
+}
+?>
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -14,12 +35,7 @@
     <header>
       <p class="header">KEDAI JERSI UTARA</p>
       <ul class="menu">
-          <li id="page1"><a href="index.html">HALAMAN UTAMA</a></li>
-          <li id="page2"><a href="senarai_produk.html">SENARAI JERSI</a></li>
-          <li id="page4"><a href="senarai_banding.html">SENARAI BANDING</a></li>
-          <li id="page5"><a href="senarai_pilihan.html">SENARAI PILIHAN</a></li>
-          <li id="page6"><a href="profil.html">PROFIL</a></li>
-          <li id="page7"><a href="logkeluar.html">LOG KELUAR</a></li>
+        <?php include 'inc/menu.php'?>
       </ul>
     </header>
     <div class="content">

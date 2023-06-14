@@ -50,28 +50,46 @@ $result = mysqli_query($conn, $sql);
           </tr>
           <?php
           while ($row = mysqli_fetch_assoc($result)){
+            $idPembelian = $row['idPembelian'];
             $idProduk = $row['idProduk'];
             $tarikh = date('d/m/Y', strtotime($row['tarikh']));
             $masa = date('h:i A', strtotime($row['masa']));
-          }
+
+            $sql2 = "SELECT * 
+                     FROM produk p
+                     INNER JOIN jenama j
+                     ON p.idJenama = j.idJenama
+                     WHERE idProduk = '$idProduk'";
+            $result2 = mysqli_query($conn, $sql2);
+            while ($row2 = mysqli_fetch_assoc($result2)) {
+              $namaProduk = $row2['namaProduk'];
+              $jenama = $row2['jenama'];
+              $saiz = $row2['saiz'];
+              $warna = ucwords($row2['warna']);
+              $harga = $row2['harga'];
+              $gambar = $row2['gambar'];
+            }
           ?>
           <tr>
             <td>
               <a href="produk.html">
-                <img src="img/al_prestigious_cup_johor.jpg">
+                <img src="img/<?php echo $gambar?>">
               </a>
             </td>
-            <td>Al Prestigious Cup Johor</td>
-            <td>Adidas</td>
-            <td>L</td>
-            <td>Biru</td>
-            <td>RM 45.00</td>
+            <td><?php echo $namaProduk?></td>
+            <td><?php echo $jenama?></td>
+            <td><?php echo $saiz?></td>
+            <td><?php echo $warna?></td>
+            <td>RM <?php echo $harga?></td>
             <td>
-              <p>29/11/2022</p>
-              <p>12.30 pm</p>
-              <a class="print" href="">Hapus</a>
+              <p><?php echo $tarikh?></p>
+              <p><?php echo $masa?></p>
+              <a class="print" href="inc/hapus-inc.php?idPembelian=<?php echo $idPembelian?>">Hapus</a>
             </td>
           </tr>
+          <?php
+          }
+          ?>
         </table>
         <button  class="print" onclick="window.print(); return false;">Cetak</button>
       </div>
