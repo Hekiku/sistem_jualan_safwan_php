@@ -1,6 +1,6 @@
 <?php
 session_start();
-if ($_SESSION['status'] != 'pegguna') {
+if ($_SESSION['status'] != 'pengguna') {
   header("Location: index.php?ralat=aksestidakdibenarkan");
 }
 
@@ -44,17 +44,17 @@ while ($row = mysqli_fetch_assoc($result)){
         <button onclick="ubahSaizFont(-5)">-</button>
       </div>
       <h1 class="teks">Kemaskini Maklumat Pengguna</h1>
-      <form class="borang" action="" method="post">
+      <form class="borang" action="inc/profil-inc.php" method="post">
         <label for="idPengguna">ID Pengguna</label>
-        <input type="text" name="idPengguna" id="idPengguna" readonly value="safwan123">
+        <input type="text" name="idPengguna" id="idPengguna" readonly value="<?php echo $idPengguna?>">
         <label for="kataLaluan">Kata Laluan</label>
-        <input type="password" name="kataLaluan" id="kataLaluan" minlength="8" maxlength="10" required value="safwan123">
+        <input type="password" name="kataLaluan" id="kataLaluan" minlength="8" maxlength="10" required value="<?php echo $kataLaluan?>">
         <label for="nama">Nama</label>
-        <input type="text" name="nama" id="nama" pattern="[A-Za-z]+" title="Sila guna huruf sahaja" required value="Safwan">
+        <input type="text" name="nama" id="nama" pattern="[A-Za-z ]+" title="Sila guna huruf sahaja" required value="<?php echo $nama?>">
         <label for="noTelefon">No Telefon</label>
-        <input type="text" name="noTelefon" id="noTelefon" pattern="[0-9]+" title="Sila masukkan nombor sahaja" value="0125831411">
+        <input type="text" name="noTelefon" id="noTelefon" pattern="[0-9]+" title="Sila masukkan nombor sahaja" value="<?php echo $noTelefon?>">
         <label for="email">Email</label>
-        <input type="email" name="email" id="email" value="safwan@gmail.com">
+        <input type="email" name="email" id="email" value="<?php echo $email?>">
         <button type="submit" name="kemaskini">Kemaskini</button>
       </form>
     </div>
