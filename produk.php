@@ -53,9 +53,10 @@ while ($row = mysqli_fetch_assoc($result)){
           <p class="lbl teks">Saiz:</p><p class="detail teks"><?php echo $saiz?></p>
           <p class="lbl teks">Warna:</p><p class="detail teks"><?php echo $warna?></p>
           <p class="hargaProduk teks"><?php echo $harga?></p>
-          <form class="brgBandingPilih" action="" method="post">
-              <button type="submit" name="banding">Banding</button>
-              <button type="submit"name="pilih">Pilih</button>
+          <form class="brgBandingPilih" action="inc/produk-inc.php" method="post">
+            <input type="hidden" name="idProduk" value="<?php echo $idProduk?>">  
+            <button type="submit" name="banding">Banding</button>
+            <button type="submit"name="pilih">Pilih</button>
           </form>
       </div>
     </div>

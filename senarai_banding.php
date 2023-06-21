@@ -1,3 +1,24 @@
+<?php
+session_start();
+
+# Berhubung dengan database
+require_once 'inc/database.php';
+
+# Mendapat produk pilihan pengguna
+$idPengguna = $_SESSION['idPengguna'];
+$senaraiBanding = $_SESSION['banding'];
+
+# Mengosongkan senarai perbandingan
+if (isset($_POST['reset'])) {
+  $_SESSION['banding'] = [];
+  echo "
+  <script>
+    alert('Senarai banding telah dikosongkan');
+    window.location.href = 'senarai_produk.php';
+  </script>
+  ";
+}
+?>
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -14,12 +35,7 @@
     <header>
       <p class="header">KEDAI JERSI UTARA</p>
       <ul class="menu">
-          <li id="page1"><a href="index.html">HALAMAN UTAMA</a></li>
-          <li id="page2"><a href="senarai_produk.html">SENARAI JERSI</a></li>
-          <li id="page4"><a href="senarai_banding.html">SENARAI BANDING</a></li>
-          <li id="page5"><a href="senarai_pilihan.html">SENARAI PILIHAN</a></li>
-          <li id="page6"><a href="profil.html">PROFIL</a></li>
-          <li id="page7"><a href="logkeluar.html">LOG KELUAR</a></li>
+      <?php include 'inc/menu.php'?>
       </ul>
     </header>
     <div class="content">
@@ -29,6 +45,9 @@
       </div>
       <h1 class="teks">Senarai Banding</h1>
       <div class="senarai">
+        <?php
+        if (count($senaraiBanding) > 0) {
+        ?>
         <table>
           <tr>
             <th>Gambar</th>
@@ -38,22 +57,47 @@
             <th>Warna</th>
             <th>Harga</th>
           </tr>
+          <?php
+          foreach ($senaraiBanding as $idProduk) {
+            $sql = "SELECT * 
+                    FROM produk p
+                    INNER JOIN jenama j
+                      ON p.idJenama = j.idJenama
+                    WHERE idProduk = '$idProduk'";
+            $result = mysqli_query($conn, $sql);
+            $row = mysqli_fetch_assoc($result);
+            $namaProduk = $row['namaProduk'];
+            $jenama = $row['jenama'];
+            $saiz = $row['saiz'];
+            $warna = ucwords($row['warna']);
+            $harga = $row['harga'];
+            $gambar = $row['gambar'];
+          ?>
           <tr>
             <td>
               <a href="produk.html">
-                <img src="img/al_prestigious_cup_johor.jpg">
+                <img src="img/<?php echo $gambar?>">
               </a>
             </td>
-            <td>Al Prestigious Cup Johor</td>
-            <td>Adidas</td>
-            <td>L</td>
-            <td>Biru</td>
-            <td>RM 45.00</td>
+            <td><?php echo $namaProduk?></td>
+            <td><?php echo $jenama?></td>
+            <td><?php echo $saiz?></td>
+            <td><?php echo $warna?></td>
+            <td>RM <?php echo $harga?></td>
           </tr>
+          <?php
+          }
+          ?>
         </table>
         <form action="" method="post">
           <button type="submit" name="reset">Reset</button>
         </form>
+        <?php
+        } else {
+          echo "<p>Tiada produk untuk dibandingkan</p>";
+        }
+        ?>
+        
       </div>
     </div>
     <footer>
