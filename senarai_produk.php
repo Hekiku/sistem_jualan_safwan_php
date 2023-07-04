@@ -12,7 +12,21 @@ if(isset($_SESSION['status'])){
 require_once 'inc/database.php';
 
 # Mendapatkan produk
-$sql = "SELECT * FROM produk;";
+$namaProduk = "";
+$hargaMin = "0";
+$hargaMax = "9999";
+
+if (isset($_POST['carian'])){
+  $namaProduk = $_POST['namaProduk'];
+  $hargaMin = $_POST['hargaMin'];
+  $hargaMax = $_POST['hargaMax'];
+}
+
+$sql = "SELECT * 
+        FROM produk
+        WHERE namaProduk LIKE '%" . $namaProduk . "%' AND
+        harga >= '$hargaMin' AND
+        harga <= '$hargaMax';";
 $result = mysqli_query($conn, $sql);
 
 ?>
@@ -41,6 +55,15 @@ $result = mysqli_query($conn, $sql);
         <button onclick="ubahSaizFont(-5)">-</button>
       </div>
       <h1 class="teks">Senarai Jersi</h1>
+      <form action="" class="borang" method="post">
+        <label for="namaProduk">Nama Produk</label>
+        <input type="text" name="namaProduk" id="namaProduk">
+        <label for="hargaMin">Harga Minimum</label>
+        <input type="number" name="hargaMin" id="hargaMin" min="0" value="0">
+        <label for="hargaMax">Harga Maximum</label>
+        <input type="number" name="hargaMax" id="HargaMax" min="0" value="9999">
+        <button type="submit" name="carian">Cari</button>
+      </form>
       <div class="galeri">
         <?php
         while ($row = mysqli_fetch_assoc($result)){
