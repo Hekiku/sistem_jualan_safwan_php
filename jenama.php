@@ -39,6 +39,7 @@ $result = mysqli_query($conn, $sql);
           <tr>
             <th>Bil</th>
             <th>Jenama</th>
+            <th>Hapus</th>
           </tr>
           <?php
           $bil = 1;
@@ -49,15 +50,21 @@ $result = mysqli_query($conn, $sql);
           <tr>
             <td><?php echo $bil?></td>
             <td><?php echo $jenama?></td>
+            <td>
+              <form action="inc/jenama-inc.php" method="post">
+                <input type="hidden" name="idJenama" value="<?php echo $idJenama?>">
+                <button type="submit" name="hapus">Hapus</button>
+              </form>
+            </td>
           </tr>
           <?php 
           $bil += 1;
           }
           ?>
         </table>
-        <form action="" method="post" class="borang">
+        <form action="inc/jenama-inc.php" method="post" class="borang" enctype="multipart/form-data">
           <label for="failJenama">Muat Naik Jenama</label>
-          <input type="file" name="failJenama" id="failJenama">
+          <input type="file" name="failJenama" id="failJenama" required>
           <button type="submit" name="muatnaik">Muat Naik</button>
         </form>
       </div>
