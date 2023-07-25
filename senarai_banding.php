@@ -75,7 +75,7 @@ if (isset($_POST['reset'])) {
           ?>
           <tr>
             <td>
-              <a href="produk.html">
+              <a href="produk.php?idProduk=<?php echo $idProduk?>">
                 <img src="img/<?php echo $gambar?>">
               </a>
             </td>

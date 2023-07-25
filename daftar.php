@@ -27,7 +27,13 @@
         <label for="idPengguna">ID Pengguna</label>
         <input type="text" name="idPengguna" id="idPengguna" required>
         <label for="kataLaluan">Kata Laluan</label>
-        <input type="password" name="kataLaluan" id="kataLaluan" minlength="8" maxlength="10" required>
+        <input type="password" 
+               name="kataLaluan"
+               id="kataLaluan" 
+               pattern="[a-zA-Z0-9]{8,10}" 
+               oninvalid="this.setCustomValidity('Sila masukkan 8-10 aksara sahaja')" 
+               oninput="this.setCustomValidity('')" 
+               required>
         <label for="nama">Nama</label>
         <input type="text" name="nama" id="nama" pattern="[A-Za-z ]+" title="Sila guna huruf sahaja" required>
         <label for="noTelefon">No Telefon</label>

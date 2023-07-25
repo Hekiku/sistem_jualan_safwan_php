@@ -1,4 +1,5 @@
 <?php
+# Mendapatkan status pengguna
 session_start();
 $page = "produk.php";
 if(isset($_SESSION['status'])){
@@ -11,7 +12,7 @@ if(isset($_SESSION['status'])){
 # Berhubung dengan database
 require_once 'inc/database.php';
 
-# Mendapatkan tiga produk
+# Mendapatkan tiga produk secara rawak
 $sql = "SELECT * FROM produk ORDER BY RAND() LIMIT 3;";
 $result = mysqli_query($conn, $sql);
 
@@ -36,6 +37,7 @@ $result = mysqli_query($conn, $sql);
       </ul>
     </header>
     <div class="content">
+      <!-- Button untuk menukar saiz font -->
       <div class="btnUbahSaiz">
         <button onclick="ubahSaizFont(5)">+</button>
         <button onclick="ubahSaizFont(-5)">-</button>
@@ -43,6 +45,7 @@ $result = mysqli_query($conn, $sql);
       <h1 class="teks">Menarik Hari Ini</h1>
       <div class="galeri">
           <?php
+          # Memaparkan produk
           while ($row = mysqli_fetch_assoc($result)){
             $idProduk = $row['idProduk'];
             $namaProduk = $row['namaProduk'];
@@ -64,6 +67,7 @@ $result = mysqli_query($conn, $sql);
     </footer>
     <script src="scripts.js"></script>
     <script>
+      // Fungsi warna pautan aktif
       document.getElementById("page1").style.backgroundColor="deepskyblue";
     </script>
   </body>
